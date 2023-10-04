@@ -40,7 +40,9 @@ class Game:
         for result in player.results():
             if result.game == self:
                 scores.append(result.score)
+        if not scores: return 0
         return sum(scores) / len(scores)
+    
 
 class Player:
 
@@ -85,6 +87,19 @@ class Player:
             if result.game == game:
                 acc += 1
         return acc
+    
+    @classmethod
+    def highest_scored(cls, game):
+        acc = 0
+        res = None
+        # if not game.players:
+        #     return None
+        for player in cls.all:
+            if game.average_score(player) > acc:
+                acc = game.average_score(player)
+                res = player
+        return res
+
 
 class Result:
 
